@@ -1,9 +1,4 @@
-name: TaskTracker CI
-
-env:
-  AZURE_WEBAPP_NAME: tasktracker-api-dev-deepti
-  AZURE_WEBAPP_PACKAGE_PATH: './publish'
-  DOTNET_VERSION: '9.0.x'
+name: TaskTracker CI/CD
 
 on:
   push:
@@ -13,8 +8,13 @@ on:
     branches:
       - main
 
+env:
+  AZURE_WEBAPP_NAME: tasktracker-api-dev-deepti
+  AZURE_WEBAPP_PACKAGE_PATH: ./publish
+  DOTNET_VERSION: 9.0.x
+
 jobs:
-  build-test:
+  build-test-deploy:
     runs-on: ubuntu-latest
 
     steps:
@@ -24,7 +24,7 @@ jobs:
       - name: Setup .NET
         uses: actions/setup-dotnet@v5
         with:
-          dotnet-version: '8.0.x'
+          dotnet-version: ${{ env.DOTNET_VERSION }}
 
       - name: Restore
         run: dotnet restore TaskTracker.sln
@@ -35,8 +35,8 @@ jobs:
       - name: Test
         run: dotnet test TaskTracker.sln --configuration Release --no-build --verbosity normal
 
-     - name: Publish
-        run: dotnet publish src/TaskTracker.Api/TaskTracker.Api.csproj --configuration Release --output ./publish --no-build
+      - name: Publish
+        run: dotnet publish src/TaskTracker.Api/TaskTracker.Api.csproj --configuration Release --output ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
 
       - name: Deploy to Azure App Service
         uses: azure/webapps-deploy@v3
