@@ -9,7 +9,7 @@ on:
       - main
 
 env:
-  AZURE_WEBAPP_NAME: TaskTrackerApi-Deepti-Dev
+  AZURE_WEBAPP_NAME: tasktracker-api-dev-deepti
   AZURE_WEBAPP_PACKAGE_PATH: ./publish
   DOTNET_VERSION: 9.0.x
 
