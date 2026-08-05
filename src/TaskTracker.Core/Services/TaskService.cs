@@ -76,4 +76,9 @@ public class TaskService :ITaskService
         return deleteTask;           
     }
 
+    public async Task<List<TaskItem>> GetPendingTasksAsync() 
+    {
+        return await _repo.GetPendingTasksAsync();    
+    }
+
 }
