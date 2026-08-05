@@ -16,5 +16,11 @@ public class EfTaskRepository : GenericRepository<TaskItem>, ITaskRepository
     {
         _context = context;
         _logger = logger;    
-    }       
+    }
+
+    public async Task<List<TaskItem>> GetPendingTasksAsync()
+    {
+        return await _context.Tasks
+            .Where(t => !t.IsCompleted).ToListAsync();    
+    }
 }

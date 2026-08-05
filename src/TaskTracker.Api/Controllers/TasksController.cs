@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using TaskTracker.Core;
 using TaskTracker.Core.DTOs;
 using TaskTracker.Core.Interfaces;
+using TaskTracker.Core.Models;
 
 namespace TaskTracker.Api.Controllers;
 
@@ -99,5 +100,12 @@ public class TasksController : ControllerBase
             return NotFound();        
         }
         return NoContent();    
+    }
+
+    [HttpGet("pending")]
+    public async Task<ActionResult<List<TaskItem>>> GetPendingTaskAsync() 
+    {
+        var result = await _service.GetPendingTasksAsync(); 
+        return Ok(result);    
     }
 }

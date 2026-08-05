@@ -117,5 +117,11 @@ public class TaskServiceTests
             }
             return Task.FromResult(_tasks.Remove(taskToDelete));
         }
+
+        public Task<List<TaskItem>> GetPendingTasksAsync() 
+        {
+            var pendingTasks = _tasks.Where(t => !t.IsCompleted).ToList();
+            return Task.FromResult(pendingTasks);
+        }
     }
 }

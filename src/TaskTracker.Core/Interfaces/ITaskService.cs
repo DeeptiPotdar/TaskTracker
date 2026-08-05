@@ -15,4 +15,6 @@ public interface ITaskService
 
     public Task<bool> DeleteTaskAsync(int id);
 
+    public Task<List<TaskItem>> GetPendingTasksAsync();
+
 }
